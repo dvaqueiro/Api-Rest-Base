@@ -1,10 +1,10 @@
 <?php
 
-use dvaqueiro\Application\showAllBooksService;
-use dvaqueiro\Domain\Model\Book\Book;
-use dvaqueiro\Domain\Model\Book\Isbn;
-use dvaqueiro\Infrastructure\Persistence\InMemory\Book\InMemoryBookRepository;
-use dvaqueiro\Infrastructure\Ui\Api\Application;
+use Dvaqueiro\Application\showAllBooksService;
+use Dvaqueiro\Domain\Model\Book\Book;
+use Dvaqueiro\Domain\Model\Book\Isbn;
+use Dvaqueiro\Infrastructure\Persistence\InMemory\Book\InMemoryBookRepository;
+use Dvaqueiro\Infrastructure\Ui\Api\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 require_once __DIR__.'/../../../../../vendor/autoload.php';

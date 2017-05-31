@@ -1,9 +1,9 @@
 <?php
 
-namespace dvaqueiro\Infrastructure\Persistence\InMemory\Book;
+namespace Dvaqueiro\Infrastructure\Persistence\InMemory\Book;
 
-use dvaqueiro\Domain\Model\Book\Book;
-use dvaqueiro\Domain\Model\Book\BookRepository;
+use Dvaqueiro\Domain\Model\Book\Book;
+use Dvaqueiro\Domain\Model\Book\BookRepository;
 
 /**
  * @author dvaqueiro

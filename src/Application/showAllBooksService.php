@@ -1,9 +1,10 @@
 <?php
 
-namespace dvaqueiro\Application;
+namespace Dvaqueiro\Application;
 
-use dvaqueiro\Domain\Model\Book\BookDTO;
-use dvaqueiro\Domain\Model\Book\bookRepository;
+use Dvaqueiro\Domain\Model\Book\BookDTO;
+use Dvaqueiro\Domain\Model\Book\bookRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @author dvaqueiro
@@ -22,9 +23,9 @@ class showAllBooksService
         $books = $this->bookRepository->findAll();
 
         foreach ($books as $book) {
-            $response[] = new BookDTO($book->isbn()->isbn(), $book->title(), $book->year());
+            $response[] = new BookDTO($book->isbn(), $book->title(), $book->year());
         }
 
-        return $response;
+        return new JsonResponse($response, 200);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace dvaqueiro\Domain\Model\Book;
+namespace Dvaqueiro\Domain\Model\Book;
 
 /**
  * @author dvaqueiro
@@ -11,17 +11,13 @@ class Book
     private $title;
     private $year;
 
-    function __construct(Isbn $isbn, $title, $year)
+    function __construct($isbn, $title, $year)
     {
         $this->isbn = $isbn;
         $this->title = $title;
         $this->year = $year;
     }
 
-    /**
-     *
-     * @return Isbn
-     */
     function isbn()
     {
         return $this->isbn;

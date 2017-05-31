@@ -1,6 +1,6 @@
 <?php
 
-namespace dvaqueiro\Domain\Model\Book;
+namespace Dvaqueiro\Domain\Model\Book;
 
 /**
  * @author dvaqueiro

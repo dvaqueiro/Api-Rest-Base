@@ -1,12 +1,15 @@
 <?php
 
-namespace dvaqueiro\Infrastructure\Ui\Api;
+namespace Dvaqueiro\Infrastructure\Ui\Api;
 
-use dvaqueiro\Application\showAllBooksService;
-use dvaqueiro\Domain\Model\Book\Book;
-use dvaqueiro\Domain\Model\Book\Isbn;
-use dvaqueiro\Infrastructure\Persistence\InMemory\Book\InMemoryBookRepository;
+use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
+use Dvaqueiro\Application\showAllBooksService;
+use Dvaqueiro\Domain\Model\Book\Book;
+use Dvaqueiro\Domain\Model\Book\Isbn;
+use Dvaqueiro\Infrastructure\Persistence\Doctrine\Book\DoctrineBookRepository;
+use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
+
 
 /**
  * Description of Application
@@ -41,11 +44,39 @@ class Application
 
         $app->register(new SecurityServiceProvider(), $app['security.firewalls']);
 
-        $app['book_repository'] = function () {
-            return new InMemoryBookRepository();
+        $app->register(new DoctrineServiceProvider(),
+            array(
+            'db.options' => array(
+                'driver' => 'pdo_mysql',
+                'host' => '127.0.0.1',
+                'dbname' => 'book_store',
+                'user' => 'root',
+                'password' => 'abc123456',
+                'charset' => 'utf8',
+                'driverOptions' => array(1002 => 'SET NAMES utf8',),
+            ),
+        ));
+
+        $app->register(new DoctrineOrmServiceProvider,
+            array(
+            "orm.em.options" => array(
+                "mappings" => array(
+                    array(
+                        "type" => "xml",
+                        "namespace" => "Dvaqueiro\\",
+                        "path" => __DIR__."/../../Persistence/Doctrine/Mappings",
+                    ),
+                ),
+            ),
+        ));
+
+        $app['book_repository'] = function ($app) {
+//            return new InMemoryBookRepository();
+            /* @var $entityManager \Doctrine\ORM\EntityManager */
+            return $app['orm.em']->getRepository('Dvaqueiro\Domain\Model\Book\Book');
         };
 
-        $app['book_repository']->add(new Book(new Isbn(123456), 'title', 1990));
+//        $app['book_repository']->add(new Book(new Isbn(123456), 'title', 1990));
 
         $app['show_all_books_service'] = function ($app) {
             return new showAllBooksService($app['book_repository']);
