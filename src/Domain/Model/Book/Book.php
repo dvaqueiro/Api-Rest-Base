@@ -37,4 +37,9 @@ class Book
     {
         $this->year = $year;
     }
+
+    function setTitle($title)
+    {
+        $this->title = $title;
+    }
 }

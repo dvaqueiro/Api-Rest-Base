@@ -13,7 +13,7 @@ $app->get('/', function () {
 });
 
 $app->get('/books', function () use ($app) {
-    $response = $app['show_all_books_service']->execute();
+    $response = $app['showAllBooksService']->execute();
     
     return new JsonResponse($response);
 });
@@ -27,6 +27,13 @@ $app->get('/book/{id}', function ($id) use ($app) {
 $app->post('/book', function (Request $request) use ($app) {
     $content = $request->getContent();
     $response = $app['addNewBookService']->execute($content);
+
+    return new JsonResponse($response);
+});
+
+$app->put('/book/{bookId}', function ($bookId, Request $request) use ($app) {
+    $content = $request->getContent();
+    $response = $app['updateBookService']->execute($bookId, $content);
 
     return new JsonResponse($response);
 });

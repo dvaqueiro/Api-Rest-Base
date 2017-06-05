@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Dvaqueiro\Application\addNewBookService;
 use Dvaqueiro\Application\showAllBooksService;
 use Dvaqueiro\Application\showOneBookService;
+use Dvaqueiro\Application\updateBookService;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
 
@@ -76,7 +77,7 @@ class Application
             return $app['orm.em']->getRepository('Dvaqueiro\Domain\Model\Book\Book');
         };
 
-        $app['show_all_books_service'] = function ($app) {
+        $app['showAllBooksService'] = function ($app) {
             return new showAllBooksService($app['book_repository']);
         };
 
@@ -86,6 +87,10 @@ class Application
 
         $app['addNewBookService'] = function ($app) {
             return new addNewBookService($app['book_repository']);
+        };
+
+        $app['updateBookService'] = function ($app) {
+            return new updateBookService($app['book_repository']);
         };
 
         return $app;
