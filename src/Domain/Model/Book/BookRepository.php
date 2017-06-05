@@ -11,4 +11,8 @@ interface BookRepository
      * @return array
      */
     public function findAll();
+
+    public function findById($id);
+
+    public function update($book);
 }

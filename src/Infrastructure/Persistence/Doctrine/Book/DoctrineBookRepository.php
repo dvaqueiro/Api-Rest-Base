@@ -16,4 +16,15 @@ class DoctrineBookRepository extends EntityRepository implements BookRepository
         return $this->_em->createQuery('SELECT b FROM Dvaqueiro\Domain\Model\Book\Book b')
                 ->getResult();
     }
+
+    public function findById($id)
+    {
+        return $this->find($id);
+    }
+
+    public function update($book)
+    {
+        $this->_em->persist($book);
+        $this->_em->flush();
+    }
 }

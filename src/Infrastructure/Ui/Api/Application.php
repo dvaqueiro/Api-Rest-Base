@@ -3,10 +3,10 @@
 namespace Dvaqueiro\Infrastructure\Ui\Api;
 
 use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
+use Doctrine\ORM\EntityManager;
+use Dvaqueiro\Application\addNewBookService;
 use Dvaqueiro\Application\showAllBooksService;
-use Dvaqueiro\Domain\Model\Book\Book;
-use Dvaqueiro\Domain\Model\Book\Isbn;
-use Dvaqueiro\Infrastructure\Persistence\Doctrine\Book\DoctrineBookRepository;
+use Dvaqueiro\Application\showOneBookService;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
 
@@ -72,14 +72,20 @@ class Application
 
         $app['book_repository'] = function ($app) {
 //            return new InMemoryBookRepository();
-            /* @var $entityManager \Doctrine\ORM\EntityManager */
+            /* @var $entityManager EntityManager */
             return $app['orm.em']->getRepository('Dvaqueiro\Domain\Model\Book\Book');
         };
 
-//        $app['book_repository']->add(new Book(new Isbn(123456), 'title', 1990));
-
         $app['show_all_books_service'] = function ($app) {
             return new showAllBooksService($app['book_repository']);
+        };
+
+        $app['showOneBookService'] = function ($app) {
+            return new showOneBookService($app['book_repository']);
+        };
+
+        $app['addNewBookService'] = function ($app) {
+            return new addNewBookService($app['book_repository']);
         };
 
         return $app;

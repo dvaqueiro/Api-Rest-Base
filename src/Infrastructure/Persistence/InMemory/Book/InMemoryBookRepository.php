@@ -18,11 +18,26 @@ class InMemoryBookRepository implements BookRepository
 
     public function add(Book $book)
     {
-        $this->books[$book->isbn()->isbn()] = $book;
+        $this->books[$book->isbn()] = $book;
     }
 
     public function findAll(): array
     {
         return $this->books;
+    }
+
+    public function findById($id)
+    {
+        $out = null;
+        if(array_key_exists($key, $this->books)){
+            $out = $this->books[$id];
+        }
+        
+        return $out;
+    }
+
+    public function update($book)
+    {
+        $this->add($book);
     }
 }

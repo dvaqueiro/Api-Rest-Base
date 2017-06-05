@@ -32,4 +32,9 @@ class Book
     {
         return $this->year;
     }
+
+    function setYear($year)
+    {
+        $this->year = $year;
+    }
 }

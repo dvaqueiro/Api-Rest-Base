@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @author dvaqueiro
  */
-class showAllBooksService
+class showOneBookService
 {
     private $bookRepository;
 
@@ -18,14 +18,11 @@ class showAllBooksService
         $this->bookRepository = $bookRepository;
     }
 
-    public function execute()
+    public function execute($id)
     {
-        $books = $this->bookRepository->findAll();
+        $book = $this->bookRepository->findById($id);
+        if(!$book) return "Book with id {$id} not found!!";
 
-        foreach ($books as $book) {
-            $response[] = new BookDTO($book->isbn(), $book->title(), $book->year());
-        }
-
-        return $response;
+        return new BookDTO($book->isbn(), $book->title(), $book->year());
     }
 }
