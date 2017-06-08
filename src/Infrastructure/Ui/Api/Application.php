@@ -67,6 +67,11 @@ class Application
                         "namespace" => "Dvaqueiro\\",
                         "path" => __DIR__."/../../Persistence/Doctrine/Mappings",
                     ),
+                    array(
+                        "type" => "yml",
+                        "namespace" => "Ddd\\",
+                        "path" => __DIR__."/../../../../vendor/carlosbuenosvinos/ddd/src/Infrastructure/Application/Persistence/Doctrine/Config",
+                    ),
                 ),
             ),
         ));
