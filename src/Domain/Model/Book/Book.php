@@ -2,6 +2,8 @@
 
 namespace Dvaqueiro\Domain\Model\Book;
 
+use Ddd\Domain\DomainEventPublisher;
+
 /**
  * @author dvaqueiro
  */
@@ -11,11 +13,15 @@ class Book
     private $title;
     private $year;
 
-    function __construct($isbn, $title, $year)
+    function __construct(Isbn $isbn, $title, $year)
     {
         $this->isbn = $isbn;
         $this->title = $title;
         $this->year = $year;
+
+        DomainEventPublisher::instance()->publish(
+            new BookCreated($this->isbn->isbn())
+        );
     }
 
     function isbn()
