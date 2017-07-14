@@ -1,14 +1,19 @@
 {
     "require": {
         "silex/silex": "^2.1",
-        "symfony/security": "^3.2"
+        "symfony/security": "^3.2",
+        "doctrine/dbal": "^2.5",
+        "symfony/doctrine-bridge": "^3.3",
+        "dflydev/doctrine-orm-service-provider": "^2.0",
+        "carlosbuenosvinos/ddd": "^1.6",
+        "symfony/yaml": "^3.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.1"
     },
     "autoload": {
         "psr-4": {
-            "dvaqueiro\\" : "src/"
+            "Dvaqueiro\\" : "src/"
         }           
     }
 }

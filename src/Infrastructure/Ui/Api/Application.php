@@ -1,8 +1,16 @@
 <?php
 
-namespace dvaqueiro\Infrastructure\Ui\Api;
+namespace Dvaqueiro\Infrastructure\Ui\Api;
 
+use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
+use Doctrine\ORM\EntityManager;
+use Dvaqueiro\Application\addNewBookService;
+use Dvaqueiro\Application\showAllBooksService;
+use Dvaqueiro\Application\showOneBookService;
+use Dvaqueiro\Application\updateBookService;
+use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
+
 
 /**
  * Description of Application
@@ -36,6 +44,59 @@ class Application
         );
 
         $app->register(new SecurityServiceProvider(), $app['security.firewalls']);
+
+        $app->register(new DoctrineServiceProvider(),
+            array(
+            'db.options' => array(
+                'driver' => 'pdo_mysql',
+                'host' => '127.0.0.1',
+                'dbname' => 'book_store',
+                'user' => 'root',
+                'password' => 'abc123456',
+                'charset' => 'utf8',
+                'driverOptions' => array(1002 => 'SET NAMES utf8',),
+            ),
+        ));
+
+        $app->register(new DoctrineOrmServiceProvider,
+            array(
+            "orm.em.options" => array(
+                "mappings" => array(
+                    array(
+                        "type" => "xml",
+                        "namespace" => "Dvaqueiro\\",
+                        "path" => __DIR__."/../../Persistence/Doctrine/Mappings",
+                    ),
+                    array(
+                        "type" => "yml",
+                        "namespace" => "Ddd\\",
+                        "path" => __DIR__."/../../../../vendor/carlosbuenosvinos/ddd/src/Infrastructure/Application/Persistence/Doctrine/Config",
+                    ),
+                ),
+            ),
+        ));
+
+        $app['book_repository'] = function ($app) {
+//            return new InMemoryBookRepository();
+            /* @var $entityManager EntityManager */
+            return $app['orm.em']->getRepository('Dvaqueiro\Domain\Model\Book\Book');
+        };
+
+        $app['showAllBooksService'] = function ($app) {
+            return new showAllBooksService($app['book_repository']);
+        };
+
+        $app['showOneBookService'] = function ($app) {
+            return new showOneBookService($app['book_repository']);
+        };
+
+        $app['addNewBookService'] = function ($app) {
+            return new addNewBookService($app['book_repository']);
+        };
+
+        $app['updateBookService'] = function ($app) {
+            return new updateBookService($app['book_repository']);
+        };
 
         return $app;
     }

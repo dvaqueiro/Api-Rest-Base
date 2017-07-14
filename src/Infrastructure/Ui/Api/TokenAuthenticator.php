@@ -1,6 +1,6 @@
 <?php
 
-namespace dvaqueiro\Infrastructure\Ui\Api;
+namespace Dvaqueiro\Infrastructure\Ui\Api;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
